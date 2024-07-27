@@ -1,0 +1,141 @@
+create table cust(cid int primary key,cname varchar(50) not null,ccity varchar(50) not null,cmobile_no int ,email varchar(50))
+insert into cust values (20223,'naveen','hyd',9965324452,'naveen@gmail.com')
+insert into cust values (20224,'mahesh','delhi',9965568452,'mahesh@gmail.com')
+insert into cust values (20225,'kumar','gunter',8965324452,'suresh@gmail.com')
+insert into cust values (20226,'harish','nalgonda',8665324452,'harish@gmail.com')
+insert into cust values (20227,'sai','manchiryal',9565324452,'sai@gmail.com')
+insert into cust values (20228,'chethan','kollur',9959324452,'chethan@gmail.com')
+insert into cust values (20229,'pavan','sadhnagar',9965356452,'pavan@gmail.com')
+insert into cust values (20230,'shiva','lanka',9565324652,'shiva@gmail.com')
+insert into cust values (20231,'varshith','himachal',9955364852,'varshith@gmail.com')
+insert into cust values (20232,'krishna','kondur',9965324452,'krishna@gmail.com')
+insert into cust values (20233,'lokesh','ramchendrapur',9965324452,'lokesh@gmail.com')
+insert into cust values (20234,'chandhan','pune',9965324452,'chandhan@gmail.com')
+insert into cust values (20235,'pramodh','jaipur',9965324452,'pramodh@gmail.com')
+insert into cust values (20236,'swathi','mumbai',9565324452,'swathi@gmail.com')
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+create table staf(sid int primary key,sname varchar(50) not null,scity varchar(50) not null,smobile_no int ,email varchar(50))
+insert into staf values (70772,'sitha','nawbpet',9965654452,'sitha@gmail.com')
+insert into staf values (70773,'sreenu','hyd',6965654252,'sreenu@gmail.com')
+insert into staf values (70774,'kumar','mahabubnagar',9865654456,'kumar@gmail.com')
+insert into staf values (70775,'suresh','kollur',9965654456,'sitha@gmail.com')
+insert into staf values (70776,'harshitha','kondhur',9565654458,'harshitha@gmail.com')
+insert into staf values (70777,'rakesh','pagwada',96965654485,'rakesh@gmail.com')
+insert into staf values (70778,'ramu','punjab',9965654452,'ramu@gmail.com')
+insert into staf values (70779,'ramesh','ludhiyana',6665654452,'ramesh@gmail.com')
+insert into staf values (70780,'raju','jalandar',6265654433,'raju@gmail.com')
+insert into staf values (70781,'saketh','kollur',7565654452,'saketh@gmail.com')
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+create table repair(rid int primary key,r_date varchar(20) ,r_problem varchar(50) not null,cid int ,CONSTRAINT FK_PersonOrder FOREIGN KEY (cid) REFERENCES cust(cid),sid int ,CONSTRAINT FK_Person FOREIGN KEY (sid) REFERENCES staf(sid))
+
+insert into repair values (50556644,'10/11/2022','Temperature control not working',20223,70772)
+insert into repair values (50556645,'03/02/2022','power chord does not tightly fit',20224,70773)
+insert into repair values (50556646,'15/02/2022','Fan swing not working',20225,70774)
+insert into repair values (50556647,'11/05/2022','Battery does not last full 4 hrs',20226,70775)
+insert into repair values (50556648,'4/05/2022','WIFI connectivity breaks ',20227,70776)
+insert into repair values (50556649,'6/01/2022','blank screen',20228,70777)
+insert into repair values (50556650,'29/12/2022','fan noise from the system ',20229,70778)
+insert into repair values (50556651,'23/04/2022','sound problem',20230,70779)
+insert into repair values (50556652,'26/11/2022','softwares not installaling',20231,70780)
+insert into repair values (50556653,'21/05/2022','Temperature control not working',20232,70781)
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+create table totalbill(bid int primary key,rid int ,constraint FK_hello FOREIGN KEY(rid) REFERENCES repair(rid),GST varchar(20),discount int )
+alter table totalbill add price int;
+insert into totalbill values (25569871,50556644,'10%',500,9000)
+insert into totalbill values (25569872,50556645,'5%',500,5692)
+insert into totalbill values (25569873,50556646,'9%',500,2631)
+insert into totalbill values (25569874,50556647,'6%',500,263)
+insert into totalbill values (25569875,50556648,'5%',500,9647)
+insert into totalbill values (25569876,50556649,'6%',500,2354)
+insert into totalbill values (25569877,50556650,'3%',500,1647)
+insert into totalbill values (25569878,50556651,'11%',500,6925)
+insert into totalbill values (25569879,50556652,'6%',500,4568)
+insert into totalbill values (25569880,50556653,'5%',500,3214)
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+BACKUP TABLES CREATION
+
+create table BACKUP1(cid int primary key,cname varchar(50) not null,ccity varchar(50) not null,cmobile_no int ,email varchar(50))
+create table BACKUP2(cid int primary key,cname varchar(50) not null,ccity varchar(50) not null,cmobile_no int ,email varchar(50))
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+declare 
+a totalbill.price%type;
+invalid exception;
+begin
+select count(*) into a
+from totalbill
+where price<3000;
+if a<=5 then
+raise invalid;
+else 
+dbms_output.put_line('DISCOUNT of rupess 500 applicable to this '||a||' bills');
+
+end if;
+exception
+when invalid then
+dbms_output.put_line('NO DISCOUNT is applicable for this '||a||' bills');
+end;
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+delete from staf where sid =25569871
+drop table repair;
+select *from cust
+select *from staf
+
+select *from repair
+
+select *from totalbill
+
